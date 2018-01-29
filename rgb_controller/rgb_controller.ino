@@ -1,6 +1,8 @@
 
 
 #define pot A5
+#define Rx A4
+#define Ry A3
 #define R 3
 #define G 5
 #define B 6
@@ -30,14 +32,27 @@ void setup(){
 
 void loop(){
   int pot_val;
+  int rx_val;
+  int ry_val;
+  
   pot_val = analogRead(pot);
+  rx_val = analogRead(Rx);
+  ry_val = analogRead(Ry);  
   
-  pot_out = map(pot_val, 0, 1023, 0, 255);
+  pot_val = map(pot_val, 0, 1023, 0, 255);
+  rx_val = map(rx_val, 0, 1023, 0, 255);
+  ry_val = map(ry_val, 0, 1023, 0, 255);
+    
+  analogWrite(R, gamma8[pot_val]);
+  analogWrite(G, gamma8[rx_val]);
+  analogWrite(B, gamma8[ry_val]);
   
-  gammafix = gamma8[pot_out]
-  analogWrite(R, gammafix);
-  analogWrite(B, gammafix);
-  analogWrite(G, gammafix);
+  Serial.print(pot_val);
+  Serial.print(',');
+  Serial.print(rx_val);
+  Serial.print(',');
+  Serial.print(ry_val);
+  Serial.print('\n');
   
 
 }
